@@ -3,7 +3,7 @@ package com.codinghero.algorithm;
 /**
  * fibonacci sequence
  * 
- * @author liutong01
+ * @author Tong Liu
  * 
  */
 public class Fibonacci {
