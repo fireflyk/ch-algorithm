@@ -1,7 +1,10 @@
 package com.codinghero.acm.leetcode;
 
 public class BuySellOneStock {
-	public StockOperation operate(int[] price) {
+	public int maxProfit(int[] price) {
+		if (price == null || price.length == 0)
+			return 0;
+		
 		int min = price[0];
 		StockOperation so = new StockOperation(price[0], price[0]);
 		for (int i = 1; i < price.length; i++) {
@@ -12,7 +15,7 @@ public class BuySellOneStock {
 				so.sellPrice = price[i];
 			}
 		}
-		return so;
+		return so.getProfit();
 	}
 
 	public class StockOperation {
