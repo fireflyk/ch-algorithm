@@ -9,21 +9,17 @@ public class TwoSum {
 		int[] result = new int[2];
 		List<NumberWithIndex> list = transform(numbers);
 		Collections.sort(list);
-		for (int i = 0; i < list.size(); i++) {
-			NumberWithIndex nwi = list.get(i);
-			if (nwi.number * 2 > target) {
-				break;
-			}
-			NumberWithIndex another = new NumberWithIndex();
-			another.number = target - nwi.number;
-			List<NumberWithIndex> subList = list.subList(i + 1, list.size());
-			int anotherIndex = Collections.binarySearch(subList, another);
-			if (anotherIndex < 0)
-				continue;
-			else {
-				anotherIndex += (i + 1);
-				result[0] = Math.min(nwi.index, list.get(anotherIndex).index) + 1;
-				result[1] = Math.max(nwi.index, list.get(anotherIndex).index) + 1;
+		int left = 0, right = list.size() - 1;
+		while (true) {
+			NumberWithIndex leftNwi = list.get(left);
+			NumberWithIndex rightNwi = list.get(right);
+			if (leftNwi.number + rightNwi.number < target) {
+				left++;
+			} else if (leftNwi.number + rightNwi.number > target) {
+				right--;
+			} else {
+				result[0] = Math.min(leftNwi.index, rightNwi.index) + 1;
+				result[1] = Math.max(leftNwi.index, rightNwi.index) + 1;
 				break;
 			}
 		}
