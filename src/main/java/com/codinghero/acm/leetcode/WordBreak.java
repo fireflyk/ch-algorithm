@@ -12,27 +12,38 @@ public class WordBreak {
 			t.insert(iter.next());
 		}
 
-		return wordBreak(s, t, 0, t.root);
+		boolean[] success = new boolean[s.length()];
+		for (int i = 0; i < success.length; i++)
+			success[i] = true;
+
+		return wordBreak(s, t, 0, t.root, success);
 	}
 
-	private boolean wordBreak(String s, Trie t, final int index, final Trie.Node node) {
+	private boolean wordBreak(String s, Trie t, final int index,
+			final Trie.Node node, boolean[] success) {
 		if (index == s.length())
 			return true;
+		else if (!success[index])
+			return false;
 
 		Trie.Node tempNode = node;
 		int tempIndex = index;
+		StringBuilder sb = new StringBuilder();
 		while (true) {
 			if (tempIndex == s.length())
 				return false;
+			sb.append(s.charAt(tempIndex));
 			tempNode = t.get(tempNode, s.charAt(tempIndex));
 			if (tempNode == null) {
+				success[index] = false;
 				return false;
-			} else if(wordBreak(s, t, tempIndex+1, tempNode)) {
+			} else if (!tempNode.getEnd()) {
+				tempIndex++;
+			} else if (wordBreak(s, t, tempIndex + 1, t.root, success)) {
+				// result.add(s.substring(index, tempIndex + 1));
 				return true;
-			} else if (tempNode.getEnd()) {
-				return wordBreak(s, t, tempIndex + 1, t.root);
 			} else {
-				return false;
+				tempIndex++;
 			}
 		}
 	}

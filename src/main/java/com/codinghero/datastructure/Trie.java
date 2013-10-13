@@ -1,54 +1,74 @@
 package com.codinghero.datastructure;
 
 public class Trie {
-	
+
 	private Node root = new Node();
-	
-	private class Node {
+
+	public class Node {
 		private Node[] child = new Node[26];
-		private boolean set;
-		
+		private char c;
+		private boolean end;
+
 		public Node getChild(char c) {
 			return child[c - 'a'];
 		}
 
-		public boolean visited(char c) {
+		public boolean exists(char c) {
 			return getChild(c) != null;
 		}
-		
-		public Node visit(char c) {
-			child[c - 'a'] = new Node();
+
+		public Node insert(char c) {
+			if (child[c - 'a'] == null) {
+				child[c - 'a'] = new Node();
+				child[c - 'a'].c = c;
+			}
 			return getChild(c);
 		}
-		
-		public void insert() {
-			set = true;
+
+		public void setEnd() {
+			end = true;
 		}
-		
-		public boolean exists() {
-			return set;
+
+		public boolean getEnd() {
+			return end;
 		}
 	}
-	
+
 	public void insert(String str) {
 		char[] cArr = str.toCharArray();
 		Node cur = root;
 		for (int i = 0; i < cArr.length; i++) {
-			cur = cur.visit(cArr[i]);
+			cur = cur.insert(cArr[i]);
 		}
-		cur.insert();
+		cur.setEnd();
+	}
+
+	public Node get(String str) {
+		return get(root, str);
+	}
+
+	public Node get(Node node, String str) {
+		char[] cArr = str.toCharArray();
+		Node cur = node;
+		for (int i = 0; i < cArr.length; i++) {
+			char c = cArr[i];
+			if (cur.exists(c))
+				cur = cur.getChild(c);
+			else
+				return null;
+		}
+		return cur;
+	}
+
+	public boolean exists(Node node, String str) {
+		Node resultNode = get(node, str);
+		if (resultNode == null)
+			return false;
+		else
+			return resultNode.getEnd();
 	}
 
 	public boolean exists(String str) {
-		char[] cArr = str.toCharArray();
-		Node cur = root;
-		for (int i = 0; i < cArr.length; i++) {
-			char c = cArr[i];
-			if (cur.visited(c))
-				cur = cur.getChild(c);
-			else
-				return false;
-		}
-		return cur.exists();
+		return exists(root, str);
 	}
 }
