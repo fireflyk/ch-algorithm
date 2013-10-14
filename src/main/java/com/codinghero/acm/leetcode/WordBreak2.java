@@ -1,47 +1,75 @@
 package com.codinghero.acm.leetcode;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
-public class WordBreak {
-
-	public boolean wordBreak(String s, Set<String> dict) {
+public class WordBreak2 {
+	public ArrayList<String> wordBreak(String s, Set<String> dict) {
 		Trie t = new Trie();
 		Iterator<String> iter = dict.iterator();
 		while (iter.hasNext()) {
 			t.insert(iter.next());
 		}
+		
+		ArrayList<ArrayList<String>> memo = new ArrayList<ArrayList<String>>(s.length());
+		for (int i = 0; i < s.length(); i++) {
+			memo.add(null);
+		}
+		wordBreak(s, t, 0, memo);
 
-		boolean[] success = new boolean[s.length()];
-		for (int i = 0; i < success.length; i++)
-			success[i] = true;
-
-		return wordBreak(s, t, 0, success);
+		return memo.get(0);
 	}
 
-	private boolean wordBreak(String s, Trie t, final int index, boolean[] success) {
-		if (index == s.length())
-			return true;
-		else if (!success[index])
-			return false;
+	private void wordBreak(String s, Trie t, final int index, ArrayList<ArrayList<String>> memo) {
 
+		if (memo.size() == 0) {
+			memo.add(new ArrayList<String>());
+			return;
+		} else if (memo.get(index) != null) {
+			return;
+		}
+		
 		Trie.Node tempNode = t.root;
 		int tempIndex = index;
 		StringBuilder sb = new StringBuilder();
+		ArrayList<String> resultList = new ArrayList<String>();
 		while (true) {
-			if (tempIndex == s.length())
-				return false;
+			if (tempIndex == s.length()) {
+				memo.set(index, resultList);
+				return;
+			}
 			sb.append(s.charAt(tempIndex));
 			tempNode = t.get(tempNode, s.charAt(tempIndex));
 			if (tempNode == null) {
-				success[index] = false;
-				return false;
+				memo.set(index, resultList);
+				return;
 			} else if (!tempNode.getEnd()) {
 				tempIndex++;
-			} else if (wordBreak(s, t, tempIndex + 1, success)) {
-				// result.add(s.substring(index, tempIndex + 1));
-				return true;
 			} else {
+				// arrive the tail, append the prefix
+				if (tempIndex + 1 == s.length()) {
+					resultList.add(sb.toString());
+				}
+				// not arrive the tail
+				else {
+					wordBreak(s, t, tempIndex + 1, memo);
+					ArrayList<String> list = memo.get(tempIndex + 1);
+					// if success, append them
+					if (list != null && list.size() > 0) {
+						for (int i = 0; i < list.size(); i++) {
+							String suffix = list.get(i);
+							// arrive the tail, append the suffix
+							if(!suffix.equals("")) {
+								resultList.add(sb.toString() + " " + suffix);
+							}
+							// not arrive the tail, append the suffix
+							else {
+								resultList.add(sb.toString());
+							}
+						}
+					}
+				}
 				tempIndex++;
 			}
 		}
