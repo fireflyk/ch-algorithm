@@ -4,22 +4,44 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TwoSum {
+/**
+ * Average time complexity: O(nlogn)<br/>
+ * Worst time complexity: O(n^2) 
+ * 
+ * @author Tong Liu
+ *
+ */
+public class TwoSum2 {
 	public int[] twoSum(int[] numbers, int target) {
 		int[] result = new int[2];
 		List<NumberWithIndex> list = transform(numbers);
 		Collections.sort(list);
 		int left = 0, right = list.size() - 1;
-		while (true) {
-			NumberWithIndex leftNwi = list.get(left);
-			NumberWithIndex rightNwi = list.get(right);
-			if (leftNwi.number + rightNwi.number < target) {
-				left++;
-			} else if (leftNwi.number + rightNwi.number > target) {
-				right--;
-			} else {
-				result[0] = Math.min(leftNwi.index, rightNwi.index) + 1;
-				result[1] = Math.max(leftNwi.index, rightNwi.index) + 1;
+		while (left < right) {
+			// less than the target
+			if (list.get(left).number + list.get(right).number < target) {
+				int lastLeft = left;
+				left = (left + right) / 2;
+				while (list.get(left).number + list.get(right).number < target) {
+					lastLeft = left;
+					left = (left + right) / 2;
+				}
+				left = lastLeft + 1;
+			}
+			// greater than the target
+			else if (list.get(left).number + list.get(right).number > target) {
+				int lastRight = right;
+				right = (left + right) / 2;
+				while (list.get(left).number + list.get(right).number > target) {
+					lastRight = right;
+					right = (left + right) / 2;
+				}
+				right = lastRight - 1;
+			}
+			// equals to the target
+			else {
+				result[0] = Math.min(list.get(left).index, list.get(right).index) + 1;
+				result[1] = Math.max(list.get(left).index, list.get(right).index) + 1;
 				break;
 			}
 		}
