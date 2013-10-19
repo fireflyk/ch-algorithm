@@ -5,24 +5,7 @@ import java.util.ArrayList;
 public class PalindromePartition2 {
 
 	public int minCut(String s) {
-		ArrayList<ArrayList<String>> list = partition(s);
-		if (list.size() == 0)
-			return 0;
-
-		int minLength = list.get(0).size();
-		for (int i = 1; i < list.size(); i++) {
-			int length = list.get(i).size();
-			if (length < minLength)
-				minLength = length;
-		}
-		return minLength - 1;
-	}
-
-	private ArrayList<ArrayList<String>> partition(String s) {
-		if (s.length() == 0)
-			return new ArrayList<ArrayList<String>>();
-
-		ArrayList<ArrayList<ArrayList<String>>> memo = new ArrayList<ArrayList<ArrayList<String>>>();
+		ArrayList<Integer> memo = new ArrayList<Integer>();
 		for (int i = 0; i < s.length(); i++) {
 			memo.add(null);
 		}
@@ -30,38 +13,36 @@ public class PalindromePartition2 {
 		return memo.get(0);
 	}
 
-	private boolean partition(String s, int start,
-			ArrayList<ArrayList<ArrayList<String>>> memo) {
-		// use memo to prevent duplicate calculating
-		if (memo.get(start) != null)
-			return true;
+	private void partition(String s, int start, ArrayList<Integer> memo) {
 
-		ArrayList<ArrayList<String>> curResult = new ArrayList<ArrayList<String>>();
-		for (int i = start; i < s.length(); i++) {
+		if (s.length() == 0) {
+			memo.add(0);
+			return;
+		} else if (start == s.length() - 1) {
+			memo.set(start, 0);
+			return;
+		} else if (memo.get(start) != null) {
+			return;
+		} else if (isPalindrome(s, start, s.length() - 1)) {
+			memo.set(start, 0);
+			return;
+		}
+
+		int minCut = Integer.MAX_VALUE;
+		for (int i = start; i < s.length() - 1; i++) {
 			if (isPalindrome(s, start, i)) {
-				// reach the end
-				if (i + 1 == s.length()) {
-					ArrayList<String> oneResult = new ArrayList<String>();
-					oneResult.add(s.substring(start, i + 1));
-					curResult.add(oneResult);
-				}
-				// recursively to find in the tail
-				else if (partition(s, i + 1, memo)) {
-					for (int j = 0; j < memo.get(i + 1).size(); j++) {
-						ArrayList<String> oneResult = new ArrayList<String>();
-						oneResult.add(s.substring(start, i + 1));
-						oneResult.addAll(memo.get(i + 1).get(j));
-						curResult.add(oneResult);
-					}
+				partition(s, i + 1, memo);
+				if (memo.get(i + 1) + 1 < minCut) {
+					minCut = memo.get(i + 1) + 1;
 				}
 			}
 		}
-		memo.set(start, curResult);
 
-		return memo.get(start) != null;
+		memo.set(start, minCut);
 	}
 
 	private boolean isPalindrome(String s, final int start, final int end) {
+		
 		int i = start, j = end;
 		while (i < j) {
 			if (s.charAt(i++) != s.charAt(j--))
