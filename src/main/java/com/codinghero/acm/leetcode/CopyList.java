@@ -5,50 +5,37 @@ public class CopyList {
 		if (head == null)
 			return null;
 
-		RandomListNode origHead = head;
+		// copy node & set next
+		RandomListNode origCur = head;
+		RandomListNode destCur = null;
+		while (origCur != null) {
+			destCur = new RandomListNode(origCur.label);
+			// next
+			RandomListNode temp = origCur.next;
+			origCur.next = destCur;
+			origCur = destCur.next = temp;
+		}
+		RandomListNode destHead = head.next;
 		
-		// copy first node
-		RandomListNode backupHead = new RandomListNode(head.label);
+		
 		// set random
-		RandomListNode temp = head.random;
-		if (temp != null) {
-			head.random = backupHead;
-			backupHead.random = temp;
+		origCur = head;
+		while (origCur != null) {
+			destCur = origCur.next;
+			if (origCur.random != null)
+				destCur.random = origCur.random.next;
+			origCur = destCur.next;
 		}
-		// next
-		RandomListNode prevNode = backupHead, curNode = backupHead.next;
-		head = head.next;
 		
-		while (head != null) {
-			// copy
-			curNode = new RandomListNode(head.label);
-			prevNode.next = curNode;
-
-			// set random
-			temp = head.random;
-			if (temp != null) {
-				head.random = curNode;
-				curNode.random = temp;
-			}
-
-			// next
-			prevNode = curNode;
-
-			// next
-			head = head.next;
+		// split two list
+		origCur = head;
+		while (origCur != null) {
+			destCur = origCur.next;
+			origCur.next = destCur.next;
+			origCur = origCur.next;
+			destCur.next = origCur != null ? origCur.next : null;
 		}
-
-		curNode = backupHead;
-		head = origHead;
-		while (curNode != null) {
-			if (curNode.random != null) {
-				temp = curNode.random;
-				curNode.random = curNode.random.random;
-				temp.random = head;
-			}
-			head = head.next;
-			curNode = curNode.next;
-		}
-		return backupHead;
+		
+		return destHead;
 	}
 }
