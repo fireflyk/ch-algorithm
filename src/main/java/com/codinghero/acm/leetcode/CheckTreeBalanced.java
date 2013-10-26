@@ -35,13 +35,3 @@ public class CheckTreeBalanced {
 			return b - a;
 	}
 }
-
-class TreeNode {
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode(int x) {
-		val = x;
-	}
-}
