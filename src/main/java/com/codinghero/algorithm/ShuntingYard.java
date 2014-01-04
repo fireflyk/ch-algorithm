@@ -1,25 +1,20 @@
 package com.codinghero.algorithm;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * nifix to suffix expression
+ * 
+ * @author Tong Liu
+ * 
+ */
 public class ShuntingYard {
 
-	private static List<String> OPERS = new ArrayList<String>();
 	private static Map<String, Integer> PRIORITY = new HashMap<String, Integer>();
 	
-	static {
-		OPERS.add("+");
-		OPERS.add("-");
-		OPERS.add("*");
-		OPERS.add("/");
-		OPERS.add("^");
-		OPERS.add("(");
-		OPERS.add(")");
-		
+	static {		
 		PRIORITY.put("+", 1);
 		PRIORITY.put("-", 1);
 		PRIORITY.put("*", 2);
@@ -30,52 +25,59 @@ public class ShuntingYard {
 	}
 	
 	public static boolean isOper(String str) {
-		return OPERS.contains(str);
+		return PRIORITY.containsKey(str);
 	}
 	
-	public String[] transform(String[] nifix) {
+	public String[] transform(char[] nifix) {
+		String[] nifixStr = new String[nifix.length];
+		for (int i = 0; i < nifix.length; i++)
+			nifixStr[i] = String.valueOf(nifix[i]);
+		return transform(nifixStr);
+	}
+	
+	private String[] transform(String[] nifix) {
 		
 		String[] suffix = new String[nifix.length];
 		
-		Stack<String> s = new Stack<String>();
-		int si = 0;
+		Stack<String> stack = new Stack<String>();
+		int suffixIndex = 0;
 		for (int i = 0; i < nifix.length; i++) {
 			String curr = nifix[i];
 			// number, then output
 			if (!isOper(curr)) {
-				suffix[si++] = curr;
+				suffix[suffixIndex++] = curr;
 			} 
-			// oper
+			// operation
 			else {
-				// push into stack, wait for the higher priority oper
-				if (s.isEmpty() 
+				// higher priority operation, push into stack
+				if (stack.isEmpty() 
 						|| curr.equals("(")
-						|| getPriority(curr) > getPriority(s.peek())) {
-					s.push(curr);
+						|| getPriority(curr) > getPriority(stack.peek())) {
+					stack.push(curr);
 				}
 				// pop until the left parentheses
 				else if (curr.equals(")")) {
-					while (!s.peek().equals("(")) {
-						suffix[si++] = s.pop();
+					while (!stack.peek().equals("(")) {
+						suffix[suffixIndex++] = stack.pop();
 					}
-					s.pop();
+					stack.pop();
 				}
-				// lower priority oper, so pop from stack
+				// same or lower priority operation, so pop from stack
 				else {
-					suffix[si++] = s.pop();
-					s.push(curr);
+					suffix[suffixIndex++] = stack.pop();
+					stack.push(curr);
 				}
 			}
 		}
 		
 		// pop some left oper which is the lowest priority
-		while (!s.isEmpty()) {
-			suffix[si++] = s.pop();
+		while (!stack.isEmpty()) {
+			suffix[suffixIndex++] = stack.pop();
 		}
 		
 		// trim the empty tail
-		String[] result = new String[si];
-		for (int i = 0; i < si; i++)
+		String[] result = new String[suffixIndex];
+		for (int i = 0; i < suffixIndex; i++)
 			result[i] = suffix[i];
 		return result;
 	}
