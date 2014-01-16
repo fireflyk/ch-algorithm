@@ -8,7 +8,7 @@ public class ReversePolish {
 		Stack<Integer> s = new Stack<Integer>();
 		for (String str : suffix) {
 			// push number to stack, wait for being calculated
-			if (!ShuntingYard.isOper(str)) {
+			if (ShuntingYard.isNumber(str)) {
 				s.push(Integer.parseInt(str));
 			}
 			// meet the oper to calculate, push result to stack

@@ -25,8 +25,13 @@ public class ShuntingYard {
 		PRIORITY.put(")", 0);
 	}
 	
-	public static boolean isOper(String str) {
-		return PRIORITY.containsKey(str);
+	public static boolean isNumber(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	public String[] transform(char[] nifix) {
@@ -45,7 +50,7 @@ public class ShuntingYard {
 		for (int i = 0; i < nifix.length; i++) {
 			String curr = nifix[i];
 			// number, then output
-			if (!isOper(curr)) {
+			if (isNumber(curr)) {
 				suffix[suffixIndex++] = curr;
 			} 
 			// operation
