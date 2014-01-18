@@ -11,8 +11,7 @@ public class WordLadder {
 		if (start.equals(end)) {
 			return 1;
 		}
-		@SuppressWarnings("unused")
-		double times = Math.pow(26, start.length());
+		double times = 26 * start.length();
 
 		Queue<String> queue = new ArrayDeque<String>();
 		queue.add(start);
@@ -27,11 +26,11 @@ public class WordLadder {
 					return length;
 				}
 
-//				if (times > dict.size()) {
-//					findDiff1Method2(curStart, dict, nextQueue);
-//				} else {
+				if (times > dict.size()) {
+					findDiff1Method2(curStart, dict, nextQueue);
+				} else {
 					findDiff1Method1(curStart, dict, nextQueue);
-//				}
+				}
 			}
 			queue = nextQueue;
 		}
@@ -58,7 +57,6 @@ public class WordLadder {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void findDiff1Method2(String curStart, HashSet<String> dict, Queue<String> queue) {
 		Iterator<String> iter = dict.iterator();
 		while (iter.hasNext()) {
