@@ -6,7 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-public class BinaryTreeLevelOrderTraversalTest {
+public class BinaryTreeZigzagLevelOrderTraversalTest {
 	
 	@Test
 	public void test1() {
@@ -21,12 +21,12 @@ public class BinaryTreeLevelOrderTraversalTest {
 		node2.left = node3;
 		node2.right = node4;
 		
-		ArrayList<ArrayList<Integer>> result = new BinaryTreeLevelOrderTraversal().levelOrder(node0);
+		ArrayList<ArrayList<Integer>> result = new BinaryTreeZigzagLevelOrderTraversal().zigzagLevelOrder(node0);
 		ArrayList<Integer> result0 = new ArrayList<Integer>();
 		result0.add(3);
 		ArrayList<Integer> result1 = new ArrayList<Integer>();
-		result1.add(9);
 		result1.add(20);
+		result1.add(9);
 		ArrayList<Integer> result2 = new ArrayList<Integer>();
 		result2.add(15);
 		result2.add(7);
@@ -38,8 +38,8 @@ public class BinaryTreeLevelOrderTraversalTest {
 	
 	@Test
 	public void test2() {
-		Assert.assertEquals(new ArrayList<ArrayList<Integer>>(), new BinaryTreeLevelOrderTraversal().levelOrder(null));
-		ArrayList<ArrayList<Integer>> result = new BinaryTreeLevelOrderTraversal().levelOrder(new TreeNode(1));
+		Assert.assertEquals(new ArrayList<ArrayList<Integer>>(), new BinaryTreeZigzagLevelOrderTraversal().zigzagLevelOrder(null));
+		ArrayList<ArrayList<Integer>> result = new BinaryTreeZigzagLevelOrderTraversal().zigzagLevelOrder(new TreeNode(1));
 		ArrayList<Integer> result0 = new ArrayList<Integer>();
 		result0.add(1);
 		Assert.assertEquals(result0, result.get(0));
