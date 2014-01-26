@@ -11,10 +11,13 @@ public class NextPermutation {
 		for (; i >= 0; i--) {
 			Integer largerIndex = findMinimumLargerNumIndex(num[i], arr, 0, arr.size() - 1);
 			if (largerIndex < arr.size()) {
-				num[i] = arr.get(largerIndex);
+				int numI = num[i];
+				num[i] = arr.remove(largerIndex);
+				arr.add(numI);
 				i++;
 				break;
-			}
+			} else 
+				arr.add(num[i]);
 		}
 		
 		if (i >= 0) {
@@ -45,11 +48,9 @@ public class NextPermutation {
 		
 		int mid = (start + end) / 2;
 		if (target < arr.get(mid)) {
-			return this.findMinimumLargerNumIndex(target, arr, start, mid - 1);
-		} else if (target > arr.get(mid)) {
-			return this.findMinimumLargerNumIndex(target, arr, mid + 1, end);
+			return this.findMinimumLargerNumIndex(target, arr, start, Math.max(start, mid - 1));
 		} else {
-			return mid + 1;
+			return this.findMinimumLargerNumIndex(target, arr, Math.min(mid + 1, end), end);
 		}
 	}
 
@@ -85,6 +86,7 @@ public class NextPermutation {
 			if (list.size() == 0) {
 				list.add(t);
 			} else {
+				add(t, 0, list.size() - 1);
 			}
 		}
 
@@ -97,15 +99,15 @@ public class NextPermutation {
 				} else {
 					list.add(start + 1, t);
 				}
-			}
-
-			int mid = (start + end) / 2;
-			if (t.compareTo(list.get(mid)) < 0) {
-				this.add(t, start, mid - 1);
-			} else if (t.compareTo(list.get(mid)) > 0) {
-				this.add(t, mid + 1, end);
 			} else {
-				list.add(mid + 1, t);
+				int mid = (start + end) / 2;
+				if (t.compareTo(list.get(mid)) < 0) {
+					this.add(t, start, Math.max(start, mid - 1));
+				} else if (t.compareTo(list.get(mid)) > 0) {
+					this.add(t, Math.min(mid + 1, end), end);
+				} else {
+					list.add(mid + 1, t);
+				}
 			}
 		}
 	}
