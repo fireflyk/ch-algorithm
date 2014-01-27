@@ -1,12 +1,10 @@
 package com.codinghero.acm.leetcode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LetterCombinationsOfAPhoneNumber {
-
-	private static int CHAR_NUM = 26;
 	
 	private static char[][] dict = { {}, {}, { 'a', 'b', 'c' },
 			{ 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' },
@@ -14,26 +12,34 @@ public class LetterCombinationsOfAPhoneNumber {
 			{ 'w', 'x', 'y', 'z' } };
 	
 	public ArrayList<String> letterCombinations(String digits) {
+		Set<String> result = new HashSet<String>();
+		if (digits.equals("")) {
+			result.add("");
+			return new ArrayList<String>(result);
+		}
 		for (int i = 0; i < digits.length(); i++) {
-			for (int j = 0; j < dict.length; j++) {
-				
+			this.letterCombinations(digits, 0, new StringBuilder(), result);
+		}
+		return new ArrayList<String>(result);
+	}
+	
+	private void letterCombinations(String digits, int i, StringBuilder prefix, Set<String> result) {
+		if (i == digits.length()) {
+			result.add(prefix.toString());
+		} else {
+			int cInt = numStrToNumInt(digits.charAt(i));
+			for (int j = 0; j < dict[cInt].length; j++) {
+				// append this bit char
+				prefix.append(dict[cInt][j]);
+				// append next bit char recursively
+				this.letterCombinations(digits, i + 1, prefix, result);
+				// delete this bit char
+				prefix.deleteCharAt(prefix.length() - 1);
 			}
 		}
 	}
 	
-	private int[] init(String digits) {
-		int[] map = new int[CHAR_NUM];
-		for (int i = 0; i < digits.length(); i++) {
-			map[getInt(digits.charAt(i))]++;
-		}
-		return map;
-	}
-	
-	private char getChar(int n) {
-		return (char) ('a' + n);
-	}
-	
-	private int getInt(char c) {
-		return c - 'a';
+	private int numStrToNumInt(char c) {
+		return c - '0';
 	}
 }
