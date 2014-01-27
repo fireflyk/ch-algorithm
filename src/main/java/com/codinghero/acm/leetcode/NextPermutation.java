@@ -7,24 +7,31 @@ public class NextPermutation {
 	public void nextPermutation(int[] num) {
 		SortedArray<Integer> arr = new SortedArray<Integer>();
 		arr.add(num[num.length - 1]);
+		
 		int i = num.length - 2;
 		for (; i >= 0; i--) {
 			Integer largerIndex = findMinimumLargerNumIndex(num[i], arr, 0, arr.size() - 1);
+			// find a little larger
 			if (largerIndex < arr.size()) {
 				int numI = num[i];
-				num[i] = arr.remove(largerIndex);
+				num[i++] = arr.remove(largerIndex);
 				arr.add(numI);
-				i++;
 				break;
-			} else 
+			}
+			// find in higher bit
+			else {
 				arr.add(num[i]);
+			}
 		}
 		
+		// find next permutation
 		if (i >= 0) {
 			while (arr.size() > 0) {
 				num[i++] = arr.popMin();
 			}
-		} else {
+		}
+		// the minimum is the next permutation of the maximum
+		else {
 			fillIntArr(arr, num);
 		}
 	}
@@ -39,8 +46,6 @@ public class NextPermutation {
 		if (start == end) {
 			if (target < arr.get(start)) {
 				return start;
-			} else if (target > arr.get(start)) {
-				return start + 1;
 			} else {
 				return start + 1;
 			}
@@ -58,6 +63,7 @@ public class NextPermutation {
 
 		private ArrayList<T> list = new ArrayList<T>();
 
+		@SuppressWarnings("unused")
 		public T min() {
 			return list.get(0);
 		}
@@ -66,6 +72,7 @@ public class NextPermutation {
 			return list.remove(0);
 		}
 		
+		@SuppressWarnings("unused")
 		public T max() {
 			return list.get(list.size() - 1);
 		}
@@ -94,8 +101,6 @@ public class NextPermutation {
 			if (start == end) {
 				if (t.compareTo(list.get(start)) < 0) {
 					list.add(start, t);
-				} else if (t.compareTo(list.get(start)) > 0) {
-					list.add(start + 1, t);
 				} else {
 					list.add(start + 1, t);
 				}
