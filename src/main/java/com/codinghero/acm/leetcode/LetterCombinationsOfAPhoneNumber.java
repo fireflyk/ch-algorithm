@@ -8,33 +8,32 @@ public class LetterCombinationsOfAPhoneNumber {
 
 	private static int CHAR_NUM = 26;
 	
-	public ArrayList<String> letterCombinations(String digits) {
-		int[] map = this.init(digits);
-		this.letterCombinations(map, digits.length(), prefix, result);
-	}
+	private static char[][] dict = { {}, {}, { 'a', 'b', 'c' },
+			{ 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' },
+			{ 'm', 'n', 'o' }, { 'p', 'q', 'r', 's' }, { 't', 'u', 'v' },
+			{ 'w', 'x', 'y', 'z' } };
 	
-	private void letterCombinations(int[] map, int n, StringBuilder prefix, ArrayList<String> result) {
-		if (n == 0)
-			result.add(prefix.toString());
-		for (int i = 0; i < CHAR_NUM; i++) {
-			if (map[i] != 0) {
-				map[i]--;
-				letterCombinations(map, n - 1, prefix.append(getChar(i)), result);
-				prefix.deleteCharAt(prefix.length() - 1);
-				map[i]++;
+	public ArrayList<String> letterCombinations(String digits) {
+		for (int i = 0; i < digits.length(); i++) {
+			for (int j = 0; j < dict.length; j++) {
+				
 			}
 		}
 	}
-
+	
 	private int[] init(String digits) {
 		int[] map = new int[CHAR_NUM];
 		for (int i = 0; i < digits.length(); i++) {
-			
+			map[getInt(digits.charAt(i))]++;
 		}
 		return map;
 	}
 	
 	private char getChar(int n) {
 		return (char) ('a' + n);
+	}
+	
+	private int getInt(char c) {
+		return c - 'a';
 	}
 }
