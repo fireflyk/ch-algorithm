@@ -1,6 +1,6 @@
 package com.codinghero.acm.leetcode;
 
-public class SudokuSolver {
+public class SudokuSolver2 {
 
 	private static final int N = 9;
 	

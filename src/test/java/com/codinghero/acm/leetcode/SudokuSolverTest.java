@@ -6,7 +6,9 @@ import org.junit.Test;
 
 public class SudokuSolverTest {
 	@Test
-	public void test() {
+	public void test() throws InterruptedException {
+		Thread.sleep(1000);
+		
 		SudokuSolver1 instance1 = new SudokuSolver1();
 		char[][] board = new char[][] {
 				{ '5', '3', '.', '.', '7', '.', '.', '.', '.' },
@@ -25,7 +27,7 @@ public class SudokuSolverTest {
 		Assert.assertEquals('1', board[0][7]);
 		Assert.assertEquals('9', board[3][2]);
 		
-		SudokuSolver instance2 = new SudokuSolver();
+		SudokuSolver2 instance2 = new SudokuSolver2();
 		board = new char[][] {
 				{ '5', '3', '.', '.', '7', '.', '.', '.', '.' },
 				{ '6', '.', '.', '1', '9', '5', '.', '.', '.' },
@@ -37,7 +39,7 @@ public class SudokuSolverTest {
 				{ '.', '.', '.', '4', '1', '9', '.', '.', '5' },
 				{ '.', '.', '.', '.', '8', '.', '.', '7', '9' } };
 		startTime = System.currentTimeMillis();
-		instance1.solveSudoku(board);
+		instance2.solveSudoku(board);
 		endTime = System.currentTimeMillis();
 		System.out.println(endTime - startTime);
 	}
