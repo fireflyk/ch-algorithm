@@ -1,44 +1,33 @@
 package com.codinghero.acm.leetcode;
 
-public class SudokuSolver {
-
+public class SudokuSolver1 {
 	private static final int N = 9;
-	
-	private static final ValidSudoku validator = new ValidSudoku();
 
 	public void solveSudoku(char[][] board) {
-		solveSudoku(board, 0, 0);
+		innerSolveSudoku(board);
 	}
 	
-	private boolean solveSudoku(char[][] board, int startI, int startJ) {
-		for (int i = startI, j = startJ; j < N; j++) {
-			if (board[i][j] == '.') {
-				return try1To9(board, i, j);
-			}
-		}
+	private boolean innerSolveSudoku(char[][] board) {
 		
-		for (int i = startI + 1; i < N; i++) {
+		ValidSudoku validator = new ValidSudoku();
+		
+		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				if (board[i][j] == '.') {
-					return try1To9(board, i, j);
+					for (int k = 1; k <= N; k++) {
+						board[i][j] = (char) (k + '0');
+						if (validator.isValidSudoku(board) && innerSolveSudoku(board))
+							return true;
+						board[i][j] = '.';
+					}
+					return false;
 				}
 			}
 		}
-		// there is no '.' cell
 		return true;
 	}
 	
-	private boolean try1To9(char[][] board, int i, int j) {
-		for (char k = '1'; k <= '9'; k++) {
-			board[i][j] = k;
-			if (validator.isValidSudoku(board) && solveSudoku(board, i, j))
-				return true;
-			board[i][j] = '.';
-		}
-		return false;
-	}
-	
-	private static class ValidSudoku {
+	private class ValidSudoku {
 		
 		private static final int N = 9;
 		
@@ -100,5 +89,4 @@ public class SudokuSolver {
 			return true;
 		}
 	}
-
 }
