@@ -1,19 +1,23 @@
 package com.codinghero.acm.leetcode;
 
-public class RegularExpressionMatching {
-	
-	private static char ANY_SINGLE_CHARACTER = '.';
+public class WildcardMatching {
+	private static char ANY_SINGLE_CHARACTER = '?';
 	private static char ZERO_OR_MORE_CHARACTER = '*';
 	
-	public boolean isMatch(String s, String p) {
+	public boolean isMatch(String s, String pattern) {
+		String newPattern = pattern.replace("*", "?*");
+		return isRegularMatch(s, newPattern);
+	}
+	
+	public boolean isRegularMatch(String s, String p) {
 		if (s == null || p == null)
 			return false;
 
 		Boolean[][] memo = new Boolean[s.length() + 1][p.length() + 1];
-		return isMatch(s, p, 0, 0, memo);
+		return isRegularMatch(s, p, 0, 0, memo);
 	}
 
-	private boolean isMatch(String s, String p, int indexS, int indexP, Boolean[][] memo) {
+	private boolean isRegularMatch(String s, String p, int indexS, int indexP, Boolean[][] memo) {
 		if (indexS == s.length()) {
 			if (indexP == p.length()) {
 				return this.put(indexS, indexP, true, memo);
@@ -60,7 +64,7 @@ public class RegularExpressionMatching {
 	private boolean get(String s, String p, int indexS, int indexP, Boolean[][] memo) {
 		Boolean result = memo[indexS][indexP];
 		if (result == null) {
-			result = this.isMatch(s, p, indexS, indexP, memo);
+			result = this.isRegularMatch(s, p, indexS, indexP, memo);
 			return result;
 		} else {
 			return result;
