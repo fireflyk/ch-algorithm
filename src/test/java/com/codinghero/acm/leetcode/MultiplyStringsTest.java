@@ -54,4 +54,20 @@ public class MultiplyStringsTest {
 		BigInteger result = num1.multiply(num2);
 		Assert.assertEquals("9801", result.toString());
 	}
+
+	@Test
+	public void test7() {
+		BigInteger num1 = new BigInteger("0");
+		BigInteger num2 = new BigInteger("0");
+		BigInteger result = num1.multiply(num2);
+		Assert.assertEquals("0", result.toString());
+	}
+
+	@Test
+	public void test8() {
+		BigInteger num1 = new BigInteger("11");
+		BigInteger num2 = new BigInteger("0");
+		BigInteger result = num1.multiply(num2);
+		Assert.assertEquals("0", result.toString());
+	}
 }

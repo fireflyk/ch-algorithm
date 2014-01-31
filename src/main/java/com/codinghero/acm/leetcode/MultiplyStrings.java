@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class MultiplyStrings {
 	public String multiply(String num1, String num2) {
-		return "";
+		BigInteger result = new BigInteger(num1).multiply(new BigInteger(num2));
+		return result.toString();
 	}
 	
 	static class BigInteger {
@@ -61,7 +62,8 @@ public class MultiplyStrings {
 			}
 			// if the carry bit is not used, remove the highest bit
 			if (carry == 0) {
-				result = Arrays.copyOfRange(result, 1, result.length);
+				// result = Arrays.copyOfRange(result, 1, result.length);
+				result = removeHeadZero(result);
 			} else {
 				result[k] = carry;
 			}
@@ -89,11 +91,24 @@ public class MultiplyStrings {
 				carry = temp / 10;
 			}
 			if (carry == 0) {
-				result = Arrays.copyOfRange(result, 1, result.length);
+				// result = Arrays.copyOfRange(result, 1, result.length);
+				result = removeHeadZero(result);
 			} else {
 				result[k] = carry;
 			}
 			return result;
+		}
+		
+		private int[] removeHeadZero(int[] nums1) {
+			int i = 0;
+			for (; i < nums1.length && nums1[i] == 0; i++) {
+			}
+			if (i == 0)
+				return Arrays.copyOf(nums1, nums1.length);
+			else if (i == nums1.length)
+				return new int[] { 0 };
+			else
+				return Arrays.copyOfRange(nums1, i, nums1.length);
 		}
 		
 		public int[] toIntArray() {
