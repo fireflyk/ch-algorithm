@@ -1,6 +1,5 @@
 package com.codinghero.acm.leetcode;
 
-import java.util.LinkedList;
 
 public class LongestValidParentheses {
 	public int longestValidParentheses(String s) {
@@ -8,34 +7,34 @@ public class LongestValidParentheses {
 			return 0;
 		
 		char[] cArr = s.toCharArray();
-		int maxLength = 0, leftBracket = 0, rightBracket = 0;
-		LinkedList<Integer> list = new LinkedList<Integer>();
-		for (char c : cArr) {
+		int[] lengths = new int[cArr.length];
+		int maxLength = 0;
+		for (int i = 0; i < cArr.length; i++) {
+			char c = cArr[i];
 			if (c == '(') {
-				leftBracket++;
+				lengths[i] = 0;
 			} else if (c == ')') {
-				if (leftBracket > rightBracket) {
-					rightBracket++;
-					if (!list.isEmpty()) {
-						Integer last = list.removeLast();
-						int curLength = last + 2;
-						if (curLength > maxLength)
-							maxLength = curLength;
-						list.addLast(curLength);
-					} else {
-						if (2 > maxLength)
-							maxLength = 2;
-						list.addLast(2);
+				// find the dp[i-1]
+				if (i - 1 >= 0) {
+					int j = i - 1 - lengths[i - 1];
+					// find '('
+					if (j >= 0 && cArr[j] == '(') {
+						lengths[i] = lengths[i - 1] + 2;
+						// merge the previous result, ex. '()(())' 2+4
+						if (j - 1 >= 0)
+							lengths[i] += lengths[j - 1];
+						if (lengths[i] > maxLength)
+							maxLength = lengths[i];
+					}
+					// can't find '('
+					else {
+						lengths[i] = 0;
 					}
 				}
-//				else if (curLength == 1) {
-//				}
-//				else if (leftBracket == rightBracket) {
-//					leftBracket = 0;
-//					rightBracket = 0;
-//				} else {
-//					throw new RuntimeException();
-//				}
+				// can't find the dp[i-1]
+				else {
+					lengths[i] = 0;
+				}
 			} else {
 				throw new RuntimeException();
 			}

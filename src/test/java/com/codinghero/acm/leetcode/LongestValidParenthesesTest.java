@@ -35,4 +35,10 @@ public class LongestValidParenthesesTest {
 		LongestValidParentheses instance = new LongestValidParentheses();
 		Assert.assertEquals(2, instance.longestValidParentheses("(()"));
 	}
+	
+	@Test
+	public void test6() {
+		LongestValidParentheses instance = new LongestValidParentheses();
+		Assert.assertEquals(0, instance.longestValidParentheses(")"));
+	}
 }
