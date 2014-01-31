@@ -1,5 +1,12 @@
 package com.codinghero.acm.leetcode;
 
+/**
+ * TLE<br/>
+ * Quick Sort is O(n^2) in the worst case
+ * 
+ * @author Tong Liu
+ * 
+ */
 public class SortList2 {
 	public ListNode sortList(ListNode head) {
 		ListNode virtualHead = new ListNode(0);

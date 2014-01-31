@@ -1,8 +1,7 @@
 package com.codinghero.acm.leetcode;
 
 /**
- * TLE<br/>
- * Quick Sort is O(n^2) in the worst case
+ * Merge Sort
  * 
  * @author Tong Liu
  * 
@@ -24,6 +23,7 @@ public class SortList {
 		if (length == 1) {
 			return head;
 		}
+		// find the right list head
 		ListNode iter = head;
 		for (int i = 0; i < length / 2 - 1; i++) {
 			iter = iter.next;
@@ -31,21 +31,12 @@ public class SortList {
 		ListNode rightHead = iter.next;
 		iter.next = null;
 		
+		// merge recursively
 		ListNode newLeftHead = mergeSort(head, length / 2);
 		ListNode newRightHead = mergeSort(rightHead, length - length / 2);
 		ListNode newHead = merge(newLeftHead, newRightHead);
 		
 		return newHead;
-				
-//		for (; i < length; i++) {
-//			if (right != null) {
-//				right.next = iter;
-//				right = right.next;
-//			} else {
-//				right = iter;
-//			}
-//			iter = iter.next;
-//		}
 	}
 	
 	private ListNode merge(ListNode head1, ListNode head2) {
@@ -81,14 +72,4 @@ public class SortList {
 		}
 		return head.next;
 	}
-	
-//	private class ListNodeResult {
-//		private ListNode head;
-//		private ListNode tail;
-//		
-//		public ListNodeResult(ListNode head, ListNode tail) {
-//			this.head = head;
-//			this.tail = tail;
-//		}
-//	}
 }
