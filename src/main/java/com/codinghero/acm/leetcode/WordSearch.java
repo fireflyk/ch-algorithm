@@ -14,7 +14,17 @@ public class WordSearch {
 		return false;
 	}
 	
-	// up, right, down, left
+	/**
+	 * find towards up, right, down, left, recursively
+	 * 
+	 * @param board
+	 * @param cArr
+	 * @param cIndex
+	 * @param i
+	 * @param j
+	 * @param visited
+	 * @return
+	 */
 	public boolean exist(char[][] board, char[] cArr, int cIndex, int i, int j, boolean[][] visited) {
 		if (cIndex == cArr.length)
 			return true;
