@@ -5,25 +5,29 @@ import java.util.Stack;
 public class LargestRectangleInHistogram {
 	public int largestRectangleArea(int[] heights) {
 		int result = 0;
+		// record the ascending height with stack
 		Stack<Integer> stack = new Stack<Integer>();
 		for (int i = 0; i < heights.length; i++) {
 			if (stack.isEmpty() || heights[i] > heights[stack.peek()]) {
-				//stack.push(i);
-			} else {
-				int recHeight = heights[stack.pop()];
-				int recWidth = stack.isEmpty() ? i : i - stack.peek() - 1;
-				result = Math.max(result, recHeight * recWidth);
 				stack.push(i);
+			}
+			// calculate the area: height * width(current high bar index - previous high bar index)
+			else {
+				int recHeight = heights[stack.pop()];
+				int recWidth = stack.isEmpty() ? i : i - 1 - stack.peek();
+				result = Math.max(result, recHeight * recWidth);
+				i--;
 			}
 		}
 
-		int i = heights.length - 1;
+		// ascending to the end, so pop to calculate
+		int i = heights.length;
 		while (!stack.isEmpty()) {
 			int recHeight = heights[stack.pop()];
-			int recWidth = stack.isEmpty() ? i : i - stack.peek() - 1;
+			int recWidth = stack.isEmpty() ? i : i - 1 - stack.peek();
 			result = Math.max(result, recHeight * recWidth);
 		}
-		
+
 		return result;
 	}
 }
