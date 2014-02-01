@@ -10,13 +10,14 @@ public class KMPTest {
 	
 	@Test
 	public void testGetImprovedKmpNext() {
+		Assert.assertEquals((new KMP().contains("", "abc")), -1);
 		// simple match
-		Assert.assertEquals((new KMP().contains("abcdefg", "bcd")), 1);
+		Assert.assertEquals((new ImprovedKMP().contains("abcdefg", "bcd")), 1);
 		// not match
-		Assert.assertEquals((new KMP().contains("ababcabcacbab", "abaabcac")), -1);
+		Assert.assertEquals((new ImprovedKMP().contains("ababcabcacbab", "abaabcac")), -1);
 		// match from first letter
-		Assert.assertEquals((new KMP().contains("abaabcacab", "abaabcac")), 0);
+		Assert.assertEquals((new ImprovedKMP().contains("abaabcacab", "abaabcac")), 0);
 		// match
-		Assert.assertEquals((new KMP().contains("ababaabcacab", "abaabcac")), 2);
+		Assert.assertEquals((new ImprovedKMP().contains("ababaabcacab", "abaabcac")), 2);
 	}
 }

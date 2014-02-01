@@ -1,9 +1,8 @@
 package com.codinghero.algorithm;
 
-public class KMP {
-
+public class ImprovedKMP {
 	public int contains(String mainStr, String patternStr) {
-		int[] next = getKmpNext(patternStr);
+		int[] next = getImprovedKmpNext(patternStr);
 		int mi = 0, pi = 0;
 		while (true) {
 			char mc = mainStr.charAt(mi);
@@ -31,16 +30,25 @@ public class KMP {
 		return -1;
 	}
 
-	private int[] getKmpNext(String str) {
+	private int[] getImprovedKmpNext(String str) {
 		int[] next = new int[str.length()];
+		// the first is -1
 		next[0] = -1;
 		int i = 0, j = -1;
 		while (i < str.length() - 1) {
+			// equal currently, go ahead
 			if (j == -1 || str.charAt(i) == str.charAt(j)) {
 				++i;
 				++j;
-				next[i] = j;
-			} else {
+				// set the next value recursively
+				if (str.charAt(i) == str.charAt(j))
+					next[i] = next[j];
+				// set the next value
+				else
+					next[i] = j;
+			}
+			// go back to find the equal substring
+			else {
 				j = next[j];
 			}
 		}
