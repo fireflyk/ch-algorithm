@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 /**
+ * use Scanner for get input
  * 
+ * test case<br/>
 4
 0 4 9 21
 4 0 8 17

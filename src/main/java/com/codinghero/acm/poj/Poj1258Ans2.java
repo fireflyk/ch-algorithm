@@ -3,9 +3,11 @@ package com.codinghero.acm.poj;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
 import java.util.HashSet;
 
 /**
+ * use StreamTokenizer for get input
  * 
 4
 0 4 9 21
@@ -19,23 +21,20 @@ import java.util.HashSet;
 public class Poj1258Ans2 {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
-		String nStr;
-		while ((nStr = cin.readLine()) != null) {
-			if (nStr.length() == 0)
-				continue;
-			final int n = Integer.parseInt(nStr);
-			long[][] graph = getInput(cin, n);
+		StreamTokenizer cin = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+		while (cin.nextToken() != StreamTokenizer.TT_EOF) {
+			long[][] graph = getInput(cin);
 			System.out.println(prim(graph));
 		}
 	}
 	
-	public static long[][] getInput(BufferedReader cin, final int n) throws NumberFormatException, IOException {
+	public static long[][] getInput(StreamTokenizer cin) throws NumberFormatException, IOException {
+		final int n = (int) cin.nval;
 		long[][] graph = new long[n][n];
 		for (int i = 0; i < n; i++) {
-			String[] nums = cin.readLine().split(" ");
-			for (int j = 0; j < nums.length; j++) {
-				graph[i][j] = Long.parseLong(nums[j]);
+			for (int j = 0; j < n; j++) {
+				cin.nextToken();
+				graph[i][j] = (long) cin.nval;
 			}
 		}
 		return graph;
