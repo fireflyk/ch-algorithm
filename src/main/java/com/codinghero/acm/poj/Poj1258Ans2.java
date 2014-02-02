@@ -22,6 +22,8 @@ public class Poj1258Ans2 {
 		BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
 		String nStr;
 		while ((nStr = cin.readLine()) != null) {
+			if (nStr.length() == 0)
+				continue;
 			final int n = Integer.parseInt(nStr);
 			long[][] graph = getInput(cin, n);
 			System.out.println(prim(graph));
