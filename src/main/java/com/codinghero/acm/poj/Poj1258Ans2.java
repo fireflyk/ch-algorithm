@@ -36,6 +36,14 @@ public class Poj1258Ans2 {
 		}
 	}
 	
+	/**
+	 * use matrix to implement prim
+	 * 
+	 * @param cin
+	 * @return
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	public static long[][] getPrimInput(StreamTokenizer cin) throws NumberFormatException, IOException {
 		final int n = (int) cin.nval;
 		long[][] graph = new long[n][n];
@@ -48,6 +56,12 @@ public class Poj1258Ans2 {
 		return graph;
 	}
 	
+	/**
+	 * use edge list to implement kruskal
+	 * 
+	 * @param graph
+	 * @return
+	 */
 	public static LinkedList<Edge> getKuskalInput(long[][] graph) {
 		LinkedList<Edge> edges = new LinkedList<Edge>();
 		for (int i = 0; i < graph.length; i++) {
@@ -60,24 +74,33 @@ public class Poj1258Ans2 {
 	}
 	
 	public static long kruskal(LinkedList<Edge> edges, final int n) {
+		// connected component
 		Integer[] group = new Integer[n];
 		long sum = 0;
 		int groupNum = 0;
 		Collections.sort(edges);
 		for (int i = 0; i < n - 1; i++) {
 			Edge edge = edges.removeFirst();
+			// two existed connected component
 			if (group[edge.v1] != null && group[edge.v2] != null) {
+				// ignore. in the same connected component 
 				if (group[edge.v1] == group[edge.v2]) {
 					i--;
 					continue;
 				}
-			} else if (group[edge.v1] != null && group[edge.v2] == null) {
+			}
+			// not in the same connected component
+			else if (group[edge.v1] != null && group[edge.v2] == null) {
 				group[edge.v2] = group[edge.v1];
 				sum += edge.distance;
-			} else if (group[edge.v1] == null && group[edge.v2] != null) {
+			}
+			// not in the same connected component
+			else if (group[edge.v1] == null && group[edge.v2] != null) {
 				group[edge.v1] = group[edge.v2];
 				sum += edge.distance;
-			} else {
+			}
+			// created a new connected component
+			else {
 				group[edge.v1] = groupNum;
 				group[edge.v2] = groupNum;
 				groupNum++;
