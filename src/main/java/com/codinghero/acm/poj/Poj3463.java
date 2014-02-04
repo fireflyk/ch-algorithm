@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 /**
  *
@@ -67,7 +66,7 @@ public class Poj3463 {
 	private void addEdge(LinkedList<Edge> edges, Edge inputEdge) {
 		Long min = null;
 		int state = START;
-		ListIterator<Edge> iter = edges.listIterator();
+		Iterator<Edge> iter = edges.iterator();
 		while (iter.hasNext()) {
 			Edge curEdge = iter.next();
 			if (inputEdge.to == curEdge.to) {
@@ -90,10 +89,10 @@ public class Poj3463 {
 		}
 		
 		if (state == START) {
-			iter.add(inputEdge);
+			edges.addLast(inputEdge);
 		} else if (state == LESS_EQUAL || state == GREATER_ONE) {
 			if (state == LESS_EQUAL)
-				iter.add(inputEdge);
+				edges.addFirst(inputEdge);
 			else if (state == GREATER_ONE)
 				edges.addLast(inputEdge);
 			while (iter.hasNext()) {
@@ -127,19 +126,18 @@ public class Poj3463 {
 					break;
 				}
 			}
-			if (state == 0) {
-				minCosts.get(edge.to).add(temp);
-			} else if (state == 1) {
+			if (state == START) {
+				minCosts.get(edge.to).addLast(temp);
+			} else if (state == LESS_EQUAL || state == GREATER_ONE) {
+				if (state == LESS_EQUAL)
+					minCosts.get(edge.to).addFirst(temp);
+				else if (state == GREATER_ONE)
+					minCosts.get(edge.to).addLast(temp);
 				while (iter.hasNext()) {
 					Long distance = iter.next();
 					if (min + 1 < distance) {
 						iter.remove();
 					}
-				}
-				if (min == temp) {
-					minCosts.get(edge.to).addFirst(temp);
-				} else if (min + 1 == temp) {
-					minCosts.get(edge.to).addLast(temp);
 				}
 			}
 		}
@@ -162,17 +160,15 @@ public class Poj3463 {
 		return minCosts.get(to).size();
 	}
 
-	private void dijkstra(ArrayList<LinkedList<Edge>> graph, HashSet<Integer> unSelectedSet, ArrayList<LinkedList<Long>> minCosts, final int from, final int to) {
+	private void dijkstra(ArrayList<LinkedList<Edge>> graph, HashSet<Integer> unSelectedSet, ArrayList<LinkedList<Long>> minCosts, final int orig, final int dest) {
 		if (unSelectedSet.isEmpty())
 			return;
 		Integer curSelect = null;
 		// iterate edge of the vertex
-		for (Edge edge : graph.get(from)) {
+		for (Edge edge : graph.get(orig)) {
 			if (unSelectedSet.contains(edge.to)) {
 				// iterate cost of all the vertex cost
-					//minCosts.get(edge.to).add(temp);
-					
-					
+				calculate(minCosts, edge);	
 			}
 		}
 		
@@ -186,12 +182,11 @@ public class Poj3463 {
 			}
 		}
 		
-//		if (curSelect == dest) {
-//			return minCosts.get(curSelect).size();
-//		}
+		if (curSelect == dest)
+			return;
 		
 		unSelectedSet.remove(curSelect);
-		dijkstra(graph, unSelectedSet, minCosts, curSelect, to);
+		dijkstra(graph, unSelectedSet, minCosts, curSelect, dest);
 	}
 	
 	private static class Edge {
