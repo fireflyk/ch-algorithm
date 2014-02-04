@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 /**
- * use Scanner for get input
+ * use Scanner for get input<br/>
+ * Prim<br/>
  * 
  * test case<br/>
 4

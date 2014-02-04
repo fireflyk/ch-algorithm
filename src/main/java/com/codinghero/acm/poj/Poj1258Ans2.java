@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  * use StreamTokenizer for get input<br/>
- * Prim: O(n^2), Kruskal: O(eloge)
+ * Prim: O(n^2), Kruskal: O(eloge)<br/>
  * 
 4
 0 4 9 21
