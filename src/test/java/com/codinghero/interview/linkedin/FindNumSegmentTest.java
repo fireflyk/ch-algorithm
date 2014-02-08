@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.codinghero.interview.linkedin.FindNumSegment.Segment;
 
-public class FindNumSegmentTest { 
+public class FindNumSegmentTest {
 	
 	private FindNumSegment instance = new FindNumSegment();
 	
@@ -45,8 +45,8 @@ public class FindNumSegmentTest {
 	
 	@Test
 	public void test6() {
-		Segment segment = instance.find(new int[] { 0, 0, 10, 10, 10, 20, 30 }, 10);
+		Segment segment = instance.find(new int[] { 0, 0, 10, 10, 20, 20, 30 }, 10);
 		Assert.assertEquals(2, segment.getStartIndex());
-		Assert.assertEquals(4, segment.getEndIndex());
+		Assert.assertEquals(3, segment.getEndIndex());
 	}
 }
