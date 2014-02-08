@@ -38,10 +38,10 @@ public class FindNumSegment {
 		int mid = (start + end) / 2;
 		if (arr[mid] == num && (mid == arr.length - 1 || arr[mid + 1] > num)) {
 			return mid;
-		} else if (arr[mid] < num) {
-			return findStart(arr, num, mid + 1, end);
+		} else if (arr[mid] <= num) {
+			return findEnd(arr, num, mid + 1, end);
 		} else {
-			return findStart(arr, num, start, mid - 1);
+			return findEnd(arr, num, start, mid - 1);
 		}
 	}
 	
