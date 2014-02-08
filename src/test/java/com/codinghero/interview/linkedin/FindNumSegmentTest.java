@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.codinghero.interview.linkedin.FindNumSegment.Segment;
 
-public class FindNumSegmentTest {
+public class FindNumSegmentTest { 
 	
 	private FindNumSegment instance = new FindNumSegment();
 	
