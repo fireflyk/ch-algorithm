@@ -15,7 +15,7 @@ public class IncrementalIDGeneratorTest {
 		for (int i = 0; i < 20000; i++) {
 			new Thread(new IDGeneratorThread()).start();
 		}
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		Assert.assertEquals(20000, IDGeneratorThread.idSet.size());
 	}
 	
