@@ -45,9 +45,9 @@ public class FileHashMap<K, V> implements Map<K, V> {
 	private void init() throws IOException {
 		Random random = new Random();
 		indexFile = new File("file_hash_map" + System.currentTimeMillis() + "_"
-				+ random.nextLong() + ".index");
+				+ Math.abs(random.nextLong()) + ".index");
 		dataFile = new File("file_hash_map" + System.currentTimeMillis() + "_"
-				+ random.nextLong() + ".data");
+				+ Math.abs(random.nextLong()) + ".data");
 		if (indexFile.exists()) {
 			indexFile.delete();
 		}
