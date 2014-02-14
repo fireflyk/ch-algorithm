@@ -1,5 +1,11 @@
 package com.codinghero.acm.leetcode;
 
+/**
+ * There is at least one part of left and right part, which is ascending
+ * 
+ * @author liutong01
+ * 
+ */
 public class SearchInRotatedSortedArray {
 	public int search(int[] arr, int target) {
 		if (arr == null || arr.length == 0)
