@@ -9,8 +9,7 @@ public class RemoveNthNodeFromEndOfList2 {
 		emptyHead.next = head;
 
 		ListNode prev = null, last = emptyHead;
-		int i = 0;
-		for (; i < n; i++) {
+		for (int i = 0; i < n; i++) {
 			last = last.next;
 			if (last == null)
 				return null;

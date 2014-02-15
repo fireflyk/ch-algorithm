@@ -1,5 +1,12 @@
 package com.codinghero.acm.leetcode;
 
+/**
+ * Consider multi special case<br/>
+ * length < n, result null; length==n, remove head; length>n, common case<br/>
+ * 
+ * @author Tong Liu
+ *
+ */
 public class RemoveNthNodeFromEndOfList {
 	public ListNode removeNthFromEnd(ListNode head, int n) {
 		if (head == null)
