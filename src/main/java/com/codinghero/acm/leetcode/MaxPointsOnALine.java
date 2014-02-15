@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * calculate the gradient. same gradient lines with public point must be same line. Time O(n^2) 
+ * 
+ * @author Tong Liu
+ *
+ */
 public class MaxPointsOnALine {
 	public int maxPoints(Point[] points) {
 		if (points == null || points.length == 0)
@@ -16,13 +22,18 @@ public class MaxPointsOnALine {
 			Map<Double, List<Point>> gradientPoints = new HashMap<Double, List<Point>>();
 			for (int j = 0; j < points.length; j++) {
 				if (i != j) {
+					// same, then plus 1 to every gradient
 					if (points[i].x == points[j].x && points[i].y == points[j].y)
 						same++;
-					else
-						calGradient(gradientPoints, gradients, points, i, j);
+					// not same, calculate the gradient
+					else {
+						double gradient = getGradient(gradients, points, i, j);
+						addSameGradientPoint(gradientPoints, points[j], gradient);
+					}
 				}
 			}
 			// find max of this round
+			// have gradient, then find max
 			if (!gradientPoints.isEmpty()) {
 				for (Map.Entry<Double, List<Point>> entry : gradientPoints.entrySet()) {
 					List<Point> sameGradientPoints = entry.getValue();
@@ -30,7 +41,9 @@ public class MaxPointsOnALine {
 							&& sameGradientPoints.size() + 1 + same > max)
 						max = sameGradientPoints.size() + 1 + same;
 				}
-			} else {
+			}
+			// no gradient, then check variable same & max
+			else {
 				if (same + 1 > max)
 					max = same + 1;
 			}
@@ -49,28 +62,12 @@ public class MaxPointsOnALine {
 		return gradients[i][j];
 	}
 	
-	private void calGradient(Map<Double, List<Point>> gradientPoints, Double[][] gradients, Point[] points, int i, int j) {
-		double gradient = getGradient(gradients, points, i, j);
-		// is same point
+	private void addSameGradientPoint(Map<Double, List<Point>> gradientPoints, Point point, double gradient) {
 		List<Point> sameGradientPoints = gradientPoints.get(gradient);
-		/*
-		boolean isSame = false;
-		if (sameGradientPoints != null) {
-			for (Point sameGradientPoint : sameGradientPoints) {
-				if (points[j].x == sameGradientPoint.x
-						&& points[j].y == sameGradientPoint.y) {
-					isSame = true;
-				}
-			}
+		if (sameGradientPoints == null) {
+			sameGradientPoints = new ArrayList<Point>();
+			gradientPoints.put(gradient, sameGradientPoints);
 		}
-		*/
-		// not same, add point
-//		if(!isSame) {
-			if (sameGradientPoints == null) {
-				sameGradientPoints = new ArrayList<Point>();
-				gradientPoints.put(gradient, sameGradientPoints);
-			}
-			sameGradientPoints.add(points[j]);
-//		}
+		sameGradientPoints.add(point);
 	}
 }
