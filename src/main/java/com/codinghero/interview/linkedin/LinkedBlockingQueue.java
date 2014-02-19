@@ -16,15 +16,19 @@ public class LinkedBlockingQueue<T> implements BlockingQueue<T> {
 	
 	private final AtomicInteger size = new AtomicInteger(0);
 	
-	private ReentrantLock takeLock = new ReentrantLock();
+//	private ReentrantLock takeLock = new ReentrantLock();
 	
 //	private final Condition notEmpty = takeLock.newCondition();
 	
+	private final Object takeLock = new Object();
+	
 	private final Object notEmpty = new Object();
 	
-	private ReentrantLock putLock = new ReentrantLock();
+//	private ReentrantLock putLock = new ReentrantLock();
 	
 //	private final Condition notFull = putLock.newCondition();
+	
+	private final Object putLock = new Object();
 	
 	private final Object notFull = new Object();
 	
@@ -165,38 +169,57 @@ public class LinkedBlockingQueue<T> implements BlockingQueue<T> {
 
 	@Override
 	public void put(T t) throws InterruptedException {
-		try {
-			putLock.lockInterruptibly();
-			while (size.get() == capacity) {
-//				notFull.await();
-				notFull.wait();
+		synchronized (putLock) {
+			try {
+				while (size.get() == capacity) {
+					waitNotFull();
+				}
+				enqueue(t);
+				size.incrementAndGet();
+			} finally {
+				notifyNotEmpty();
 			}
-			enqueue(t);
-			size.incrementAndGet();
-		} finally {
-			putLock.unlock();
-			signalNotEmpty();
+		}
+	}
+
+	@Override
+	public T take() throws InterruptedException {
+		synchronized (takeLock) {
+			try {
+				while (size.get() == 0) {
+					waitNotEmpty();
+				}
+				T t = dequeue();
+				size.decrementAndGet();
+				return t;
+			} finally {
+				notifyNotFull();
+			}
 		}
 	}
 	
-	private void signalNotEmpty() {
-//		try {
-//			takeLock.lockInterruptibly();
-//		} catch (InterruptedException e) {
-//			notEmpty.signal();
-//			takeLock.unlock();
-//		}
-		notEmpty.notify();
+	private void waitNotEmpty() throws InterruptedException {
+		synchronized (notEmpty) {
+			notEmpty.wait();
+		}
+	}
+
+	private void waitNotFull() throws InterruptedException {
+		synchronized (notFull) {
+			notFull.wait();
+		}
 	}
 	
-	private void signalNotFull() {
-//		try {
-//			putLock.lockInterruptibly();
-//		} catch (InterruptedException e) {
-//			notFull.signal();
-//			putLock.unlock();
-//		}
-		notFull.notify();
+	private void notifyNotEmpty() {
+		synchronized (notEmpty) {
+			notEmpty.notify();
+		}
+	}
+	
+	private void notifyNotFull() {
+		synchronized (notFull) {
+			notFull.notify();
+		}
 	}
 
 	@Override
@@ -204,23 +227,6 @@ public class LinkedBlockingQueue<T> implements BlockingQueue<T> {
 			throws InterruptedException {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public T take() throws InterruptedException {
-		try {
-			takeLock.lockInterruptibly();
-			while (size.get() == 0) {
-//				notEmpty.await();
-				notEmpty.wait();
-			}
-			T t = dequeue();
-			size.incrementAndGet();
-			return t;
-		} finally {
-			takeLock.unlock();
-			signalNotFull();
-		}
 	}
 
 	@Override
