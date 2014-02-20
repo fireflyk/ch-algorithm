@@ -8,9 +8,11 @@ public class LargestRectangleInHistogram {
 		// record the ascending height with stack
 		Stack<Integer> stack = new Stack<Integer>();
 		for (int i = 0; i < heights.length; i++) {
+			// ascend
 			if (stack.isEmpty() || heights[i] > heights[stack.peek()]) {
 				stack.push(i);
 			}
+			// descend
 			// calculate the area: height * width(current high bar index - previous high bar index)
 			else {
 				int recHeight = heights[stack.pop()];
