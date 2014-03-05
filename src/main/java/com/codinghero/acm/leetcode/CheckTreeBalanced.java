@@ -12,8 +12,10 @@ public class CheckTreeBalanced {
 		if (node == null)
 			return 0;
 		int leftHeight = height(node.left);
+		if (leftHeight == NOT_BALANCED)
+			return NOT_BALANCED;
 		int rightHeight = height(node.right);
-		if (leftHeight == NOT_BALANCED || rightHeight == NOT_BALANCED)
+		if (rightHeight == NOT_BALANCED)
 			return NOT_BALANCED;
 		else if (abs(leftHeight, rightHeight) > 1)
 			return NOT_BALANCED;
