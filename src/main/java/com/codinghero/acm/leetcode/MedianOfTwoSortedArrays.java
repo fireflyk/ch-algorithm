@@ -3,10 +3,13 @@ package com.codinghero.acm.leetcode;
 public class MedianOfTwoSortedArrays {
 	public double findMedianSortedArrays(int[] a, int[] b) {
 		int totalLength = a.length + b.length;
+		// odd
 		if ((totalLength & 0x1) == 0x1) {
 			return findMedianSortedArrays(a, b, 0, a.length - 1, 0,
 					b.length - 1, (totalLength + 1) / 2);
-		} else {
+		}
+		// even
+		else {
 			return ((double) findMedianSortedArrays(a, b, 0, a.length - 1, 0,
 					b.length - 1, totalLength / 2) + (double) findMedianSortedArrays(
 					a, b, 0, a.length - 1, 0, b.length - 1, totalLength / 2 + 1)) / 2;
