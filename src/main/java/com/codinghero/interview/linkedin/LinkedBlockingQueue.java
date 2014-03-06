@@ -24,10 +24,6 @@ public class LinkedBlockingQueue<T> implements BlockingQueue<T> {
 	
 	private final Object notEmpty = new Object();
 	
-//	private ReentrantLock putLock = new ReentrantLock();
-	
-//	private final Condition notFull = putLock.newCondition();
-	
 	private final Object putLock = new Object();
 	
 	private final Object notFull = new Object();

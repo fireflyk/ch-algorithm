@@ -12,14 +12,21 @@ public class LinkedBlockingQueueTest {
 	
 	@Test
 	public void test1() throws InterruptedException {
-		Thread takeThread = new Thread(new BlockingTakeThread());
-		takeThread.start();
+		Thread takeThread1 = new Thread(new BlockingTakeThread());
+		takeThread1.start();
+		Thread takeThread2 = new Thread(new BlockingTakeThread());
+		takeThread2.start();
 		Thread.sleep(1000);
-		Thread putThread = new Thread(new BlockingPutThread());
-		putThread.start();
+		Thread putThread1 = new Thread(new BlockingPutThread());
+		putThread1.start();
+		Thread.sleep(1000);
+		Thread putThread2 = new Thread(new BlockingPutThread());
+		putThread2.start();
 		
-		putThread.join();
-		takeThread.join();
+		putThread1.join();
+		putThread2.join();
+		takeThread1.join();
+		takeThread2.join();
 	}
 	
 	class BlockingTakeThread implements Runnable {
