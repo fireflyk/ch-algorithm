@@ -1,6 +1,6 @@
 package com.codinghero.interview.facebook;
 
-import java.util.List;
+import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -12,7 +12,7 @@ public class StringPermutationTest {
 	
 	@Test
 	public void test1() {
-		List<String> results = instance.getAll("aabc");
+		Set<String> results = instance.getAll("aabc");
 		Assert.assertTrue(results.contains("aabc"));
 		Assert.assertTrue(results.contains("aacb"));
 		Assert.assertTrue(results.contains("abac"));

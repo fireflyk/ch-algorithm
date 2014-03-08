@@ -1,16 +1,12 @@
 package com.codinghero.interview.facebook;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class StringPermutation {
-	public List<String> getAll(String str) {
+	public Set<String> getAll(String str) {
 		Set<String> resultSet = getAll(str, 0);
-		List<String> resultList = new ArrayList<String>();
-		resultList.addAll(resultSet);
-		return resultList;
+		return resultSet;
 	}
 
 	private Set<String> getAll(String str, int start) {
