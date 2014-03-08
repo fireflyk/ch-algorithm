@@ -25,19 +25,6 @@ public class SubString3 {
 		if (index == -1) {
 			return new ArrayList<String>();
 		}
-
-		// execute recursively
-		List<String> prevResults = getAll(str, index - 1, results);
-		
-		// handle
-		List<String> curResults = new ArrayList<String>();
-		curResults.add(String.valueOf(str.charAt(index)));
-		for (String prevResult : prevResults) {
-			curResults.add(prevResult + str.charAt(index));
-		}
-		results.addAll(curResults);
-		
-		// return current result
-		return curResults;
+		return new SubString().handle(str, index, results, getAll(str, index - 1, results));
 	}
 }

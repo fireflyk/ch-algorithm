@@ -25,13 +25,18 @@ public class SubString {
 	private void getAll(String str, int index, Set<String> results, List<String> prevResults) {
 		if (index == str.length())
 			return;
+		getAll(str, index + 1, results, handle(str, index, results, prevResults));
+	}
+	
+	List<String> handle(String str, int index, Set<String> results, List<String> prevResults) {
 		List<String> curResults = new ArrayList<String>();
+		// add ("" + c)
 		curResults.add(String.valueOf(str.charAt(index)));
-		results.add(String.valueOf(str.charAt(index)));
+		// add (prevSubString + c)
 		for (String prevResult : prevResults) {
 			curResults.add(prevResult + str.charAt(index));
-			results.add(prevResult + str.charAt(index));
 		}
-		getAll(str, index + 1, results, curResults);
+		results.addAll(curResults);
+		return curResults;
 	}
 }

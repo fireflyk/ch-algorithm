@@ -18,15 +18,7 @@ public class SubString2 {
 		List<String> prevResults = new ArrayList<String>();
 		
 		for (int index = 0; index < str.length(); index++) {
-			List<String> curResults = new ArrayList<String>();
-			// add ("" + c)
-			curResults.add(String.valueOf(str.charAt(index)));
-			// add (prevSubString + c)
-			for (String prevResult : prevResults) {
-				curResults.add(prevResult + str.charAt(index));
-			}
-			results.addAll(curResults);
-			prevResults = curResults;
+			prevResults = new SubString().handle(str, index, results, prevResults);
 		}
 		return results;
 	}
