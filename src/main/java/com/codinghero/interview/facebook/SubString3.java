@@ -6,32 +6,38 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * handle firstly, then execute recursively
+ * execute recursively firstly, then handle
  * 
  * @author Tong Liu
  * 
  */
-public class SubString {
+public class SubString3 {
 
 	public Set<String> getAll(String str) {
 		Set<String> results = new HashSet<String>();
-		List<String> prevResults = new ArrayList<String>();
 		results.add("");
-		
-		getAll(str, 0, results, prevResults);
+
+		getAll(str, str.length() - 1, results);
 		return results;
 	}
 
-	private void getAll(String str, int index, Set<String> results, List<String> prevResults) {
-		if (index == str.length())
-			return;
+	private List<String> getAll(String str, int index, Set<String> results) {
+		if (index == -1) {
+			return new ArrayList<String>();
+		}
+
+		// execute recursively
+		List<String> prevResults = getAll(str, index - 1, results);
+		
+		// handle
 		List<String> curResults = new ArrayList<String>();
 		curResults.add(String.valueOf(str.charAt(index)));
-		results.add(String.valueOf(str.charAt(index)));
 		for (String prevResult : prevResults) {
 			curResults.add(prevResult + str.charAt(index));
-			results.add(prevResult + str.charAt(index));
 		}
-		getAll(str, index + 1, results, curResults);
+		results.addAll(curResults);
+		
+		// return current result
+		return curResults;
 	}
 }

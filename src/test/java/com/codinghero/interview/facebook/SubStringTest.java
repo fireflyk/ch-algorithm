@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class SubStringTest {
 
-	private SubString instance = new SubString();
+	private SubString3 instance = new SubString3();
 	
 	@Test
 	public void test1() {

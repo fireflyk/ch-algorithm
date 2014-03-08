@@ -5,8 +5,7 @@ import java.util.Set;
 
 public class StringPermutation {
 	public Set<String> getAll(String str) {
-		Set<String> resultSet = getAll(str, 0);
-		return resultSet;
+		return getAll(str, 0);
 	}
 
 	private Set<String> getAll(String str, int start) {
