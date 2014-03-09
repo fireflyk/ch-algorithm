@@ -5,40 +5,38 @@ import java.util.List;
 
 public class Output1And2 {
 
-	private Object add1Lock = new Object();
-
-	private Object add2Lock = new Object();
+	private Object add1 = new Object();
+	private Object add2 = new Object();
+	
+	private Object tail1 = new Object();
+	private Object tail2 = new Object();
 	
 	private List<Integer> list = new ArrayList<Integer>();
 
 	public void output1() throws InterruptedException {
-		synchronized (add2Lock) {
-			if (list.isEmpty() || list.get(list.size() - 1) == 2) {
-				list.add(1);
-				add2Lock.notify();
-				return;
+		synchronized (add1) {
+			synchronized (tail2) {
+				if (!list.isEmpty() && list.get(list.size() - 1) == 1) {
+					tail2.wait();
+				}
 			}
-		}
-		synchronized (add1Lock) {
-			if (!list.isEmpty() && list.get(list.size() - 1) == 1) {
-				add1Lock.wait();
+			synchronized (tail1) {
 				list.add(1);
+				tail1.notify();
 			}
 		}
 	}
 
 	public void output2() throws InterruptedException {
-		synchronized (add1Lock) {
-			if (!list.isEmpty() && list.get(list.size() - 1) == 1) {
-				list.add(2);
-				add1Lock.notify();
-				return;
+		synchronized (add2) {
+			synchronized (tail1) {
+				if (list.isEmpty() || list.get(list.size() - 1) == 2) {
+					tail1.wait();
+				}
 			}
-		}
-		synchronized (add2Lock) {
-			if (list.isEmpty() || list.get(list.size() - 1) == 2) {
-				add2Lock.wait();
+			synchronized (tail2) {
 				list.add(2);
+				tail2.notify();
 			}
 		}
 	}
