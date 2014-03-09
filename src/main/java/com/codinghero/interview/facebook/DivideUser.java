@@ -12,7 +12,6 @@ public class DivideUser {
 			return true;
 		Set<Long> group1 = new HashSet<Long>();
 		Set<Long> group2 = new HashSet<Long>();
-		//Map<Long, Boolean> result = new HashMap<Long, Boolean>();
 		Set<Long> visited = new HashSet<Long>();
 		for (User user : users) {
 			if (!visited.contains(user.id) && !canDivide(user, group1, group2, visited)) {

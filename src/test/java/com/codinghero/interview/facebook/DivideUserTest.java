@@ -13,6 +13,12 @@ public class DivideUserTest {
 	
 	private DivideUser instance = new DivideUser();
 	
+	/**
+	 * <pre>
+	 * 1-2,1-3,2-5,4-5,4-6
+	 * </pre>
+	 * 
+	 */
 	@Test
 	public void test1() {
 		User user1 = new User(1L);
@@ -39,6 +45,50 @@ public class DivideUserTest {
 		user5.friends.add(user2);
 		user5.friends.add(user4);
 		user6.friends.add(user4);
+		
+		Assert.assertTrue(instance.canDivide(users));
+	}
+	
+	@Test
+	public void test2() {
+		User user1 = new User(1L);
+		User user2 = new User(2L);
+		User user3 = new User(3L);
+		List<User> users = new ArrayList<User>();
+		users.add(user1);
+		users.add(user2);
+		users.add(user3);
+
+		user1.friends.add(user2);
+		user1.friends.add(user3);
+		user2.friends.add(user1);
+		user2.friends.add(user3);
+		user3.friends.add(user1);
+		user3.friends.add(user2);
+		
+		Assert.assertFalse(instance.canDivide(users));
+	}
+	
+	@Test
+	public void test3() {
+		User user1 = new User(1L);
+		User user2 = new User(2L);
+		User user3 = new User(3L);
+		User user4 = new User(4L);
+		List<User> users = new ArrayList<User>();
+		users.add(user1);
+		users.add(user2);
+		users.add(user3);
+		users.add(user4);
+
+		user1.friends.add(user2);
+		user1.friends.add(user4);
+		user2.friends.add(user1);
+		user2.friends.add(user3);
+		user3.friends.add(user2);
+		user3.friends.add(user4);
+		user4.friends.add(user3);
+		user4.friends.add(user1);
 		
 		Assert.assertTrue(instance.canDivide(users));
 	}
