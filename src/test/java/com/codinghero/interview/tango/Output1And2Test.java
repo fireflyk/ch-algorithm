@@ -10,14 +10,14 @@ public class Output1And2Test {
 
 	@Test
 	public void test1() throws InterruptedException {
-		for (int i = 1; i < 1001; i++) {
+		for (int i = 1; i < 101; i++) {
 			int num = i % 2 + 1;
 			Thread thread = new Thread(new Output1And2Thread(num));
 			thread.start();
 		}
 		Thread.sleep(1000);
 		List<Integer> list = Output1And2Thread.instance.getList();
-		Assert.assertEquals(1000, list.size());
+		Assert.assertEquals(100, list.size());
 		for (int i = 0; i < list.size(); i++) {
 			Assert.assertEquals(i % 2 + 1, list.get(i).intValue());
 		}
