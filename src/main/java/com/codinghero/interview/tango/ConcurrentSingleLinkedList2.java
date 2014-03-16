@@ -1,16 +1,19 @@
 package com.codinghero.interview.tango;
 
-import java.util.ConcurrentModificationException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConcurrentSingleLinkedList2<T> {
 	
 	private ListNode<T> head;
 	
+	private ListNode<T> tail;
+	
 	private AtomicInteger size;
 	
 	public ConcurrentSingleLinkedList2() {
 		head = new ListNode<T>(null);
+		tail = new ListNode<T>(null);
+		head.next = tail;
 		size = new AtomicInteger();
 	}
 	
@@ -57,24 +60,32 @@ public class ConcurrentSingleLinkedList2<T> {
 		
 		public void add(ListNode<T> node) {
 			synchronized (this) {
-				ListNode<T> next2 = this.next;
-				this.next = node;
-				node.next = next2;
-				size.incrementAndGet();
+				ListNode<T> next = this.next;
+				while (true) {
+					synchronized (next) {
+						// the next node was removed by another thread
+						if (next != this.next) {
+							next = this.next;
+							continue;
+						}
+						// no concurrent problem occurs
+						else {
+							this.next = node;
+							node.next = next;
+							size.incrementAndGet();
+						}
+					}
+				}
 			}
 		}
 		
-		public ListNode<T> remove() throws ConcurrentModificationException {
+		public ListNode<T> remove() {
 			synchronized (this) {
 				ListNode<T> next = this.next;
-				while (next != null) {
+				while (next != tail) {
 					synchronized (next) {
-						// the current node was removed by another thread
-						if (this.next == null) {
-							new ConcurrentModificationException("The current node was removed by another thread.");
-						}
 						// the next node was removed by another thread
-						else if (next != this.next) {
+						if (next != this.next) {
 							next = this.next;
 							continue;
 						}
@@ -87,6 +98,7 @@ public class ConcurrentSingleLinkedList2<T> {
 						}
 					}
 				}
+				// the next node is tail, so do nothing
 				return null;
 			}
 		}
