@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class LockFreeStack<T> {
 
-	private AtomicReference<ListNode<T>> peek;
+	private AtomicReference<ListNode<T>> peek = new AtomicReference<ListNode<T>>();
 
 	public void push(T t) {
 		ListNode<T> listNode = new ListNode<T>(t);
@@ -19,6 +19,7 @@ public class LockFreeStack<T> {
 			result = peek.get();
 			if (result == null)
 				return null;
+			//while(peek..compareAndSet(null, update))
 		} while (!peek.compareAndSet(result, result.getNext()));
 		result.setNext(null);
 		return result.getValue();
