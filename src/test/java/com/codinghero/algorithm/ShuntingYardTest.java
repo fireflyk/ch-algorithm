@@ -7,9 +7,16 @@ import com.codinghero.util.ArrayUtils;
 import com.codinghero.util.StringUtils;
 
 public class ShuntingYardTest {
+
 	
 	@Test
-	public void test() {
+	public void testSimple() {
+		String[] suffix = new ShuntingYard().transform("7+3*4*5+2+4".toCharArray());
+		Assert.assertEquals("734*5*+2+4+", StringUtils.join(ArrayUtils.toList(suffix), ""));
+	}
+	
+	@Test
+	public void testBracket() {
 		String nifix = "3+4*2/(1-5)+1";
 		String[] suffix = new ShuntingYard().transform(nifix.toCharArray());
 		Assert.assertEquals("342*15-/+1+", StringUtils.join(ArrayUtils.toList(suffix), ""));
