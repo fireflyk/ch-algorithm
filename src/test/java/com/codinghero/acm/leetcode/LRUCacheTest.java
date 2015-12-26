@@ -1,20 +1,33 @@
 package com.codinghero.acm.leetcode;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class LRUCacheTest {
-	
-	@Test
-	public void test() {
-		LRUCache cache = new LRUCache(1);
-		cache.set(2, 1);
-		Assert.assertEquals(1, cache.get(2));
-		
-		cache.set(4, 2);
-		Assert.assertEquals(2, cache.get(4));
-		Assert.assertEquals(-1, cache.get(2));
-		
-		cache.set(4, 1);
-		Assert.assertEquals(1, cache.get(4));
-	}
+
+    /**
+     * Set will rearrange the order
+     */
+    @Test
+    public void testSet() {
+        LRUCache2 cache = new LRUCache2(2);
+        cache.set(1, 1);
+        cache.set(2, 2);
+        cache.set(1, 1);
+        cache.set(3, 3);
+        Assert.assertEquals(-1, cache.get(2));
+    }
+
+    /**
+     * Get will rearrange the order
+     */
+    @Test
+    public void testGet() {
+        LRUCache2 cache = new LRUCache2(2);
+        cache.set(1, 1);
+        cache.set(2, 2);
+        Assert.assertEquals(1, cache.get(1));
+        cache.set(3, 3);
+        Assert.assertEquals(-1, cache.get(2));
+    }
 }

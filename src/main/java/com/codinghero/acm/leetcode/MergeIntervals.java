@@ -3,18 +3,19 @@ package com.codinghero.acm.leetcode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class MergeIntervals {
-	public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+	public List<Interval> merge(List<Interval> intervals) {
 		if (intervals == null)
 			return null;
 		Collections.sort(intervals, new IntervalComparator());
-		ArrayList<Interval> result = new ArrayList<Interval>();
+		List<Interval> result = new ArrayList<Interval>();
 		merge(intervals, result, 0);
 		return result;
 	}
 	
-	private void merge(ArrayList<Interval> intervals, ArrayList<Interval> result, int startIndex) {
+	private void merge(List<Interval> intervals, List<Interval> result, int startIndex) {
 		if (startIndex >= intervals.size())
 			return;
 		Interval head = intervals.get(startIndex);

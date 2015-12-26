@@ -2,21 +2,22 @@ package com.codinghero.acm.leetcode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Subset {
-	public ArrayList<ArrayList<Integer>> subsets(int[] arr) {
+	public List<List<Integer>> subsets(int[] arr) {
 		Arrays.sort(arr);
-		ArrayList<ArrayList<Integer>> result = subsets(arr, 0);
-		ArrayList<Integer> newE = new ArrayList<Integer>();
+		List<List<Integer>> result = subsets(arr, 0);
+		List<Integer> newE = new ArrayList<Integer>();
 		result.add(newE);
 		return result;
 	}
 
-	private ArrayList<ArrayList<Integer>> subsets(int[] arr, int curIndex) {
+	private List<List<Integer>> subsets(int[] arr, int curIndex) {
 		
-		ArrayList<ArrayList<Integer>> curResult = new ArrayList<ArrayList<Integer>>();
+		List<List<Integer>> curResult = new ArrayList<List<Integer>>();
 		if (curIndex == arr.length - 1 || arr[curIndex] != arr[curIndex + 1]) {
-			ArrayList<Integer> newE = new ArrayList<Integer>();
+			List<Integer> newE = new ArrayList<Integer>();
 			newE.add(arr[curIndex]);
 			curResult.add(newE);
 		}
@@ -24,20 +25,20 @@ public class Subset {
 		if (curIndex == arr.length - 1)
 			return curResult;
 
-		ArrayList<ArrayList<Integer>> nextResult = subsets(arr, curIndex + 1);
+		List<List<Integer>> nextResult = subsets(arr, curIndex + 1);
 
 		if (arr[curIndex] == arr[curIndex + 1]) {
-			for (ArrayList<Integer> e : nextResult) {
+			for (List<Integer> e : nextResult) {
 				if (arr[curIndex] == e.get(0)) {
-					ArrayList<Integer>  newE = new ArrayList<Integer>();
+					List<Integer>  newE = new ArrayList<Integer>();
 					newE.add(arr[curIndex]);
 					newE.addAll(e);
 					curResult.add(newE);
 				}
 			}
 		} else {
-			for (ArrayList<Integer> e : nextResult) {
-				ArrayList<Integer>  newE = new ArrayList<Integer>();
+			for (List<Integer> e : nextResult) {
+				List<Integer>  newE = new ArrayList<Integer>();
 				newE.add(arr[curIndex]);
 				newE.addAll(e);
 				curResult.add(newE);
