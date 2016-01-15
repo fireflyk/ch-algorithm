@@ -11,20 +11,24 @@ public class Subset3 {
     }
 
     private List<List<Integer>> subsets(int[] nums, int end) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        // add empty subset
         if (end == -1) {
+            // ArrayList is better than LinkedList in performance, in this case
+            List<List<Integer>> result = new ArrayList<List<Integer>>();
             result.add(new ArrayList<Integer>());
             return result;
         }
+
+        // previous result
         List<List<Integer>> prevResult = subsets(nums, end - 1);
 
-        for (List<Integer> prevSubset : prevResult) {
-            List<Integer> newSubset = new ArrayList<Integer>(prevSubset);
+        // append on previous result
+        int size = prevResult.size();
+        for (int i = 0; i < size; i++) {
+            List<Integer> newSubset = new ArrayList<Integer>(prevResult.get(i));
             newSubset.add(nums[end]);
-            result.add(newSubset);
+            prevResult.add(newSubset);
         }
-
-        result.addAll(prevResult);
-        return result;
+        return prevResult;
     }
 }
