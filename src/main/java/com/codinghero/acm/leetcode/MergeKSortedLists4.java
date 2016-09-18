@@ -1,18 +1,17 @@
 package com.codinghero.acm.leetcode;
 
-
 public class MergeKSortedLists4 {
     public ListNode mergeKLists(ListNode[] lists) {
-        return partion(lists, 0, lists.length - 1);
+        return partition(lists, 0, lists.length - 1);
     }
 
-    private ListNode partion(ListNode[] lists, int s, int e) {
+    private ListNode partition(ListNode[] lists, int s, int e) {
         if (s == e)
             return lists[s];
         if (s < e) {
             int q = (s + e) / 2;
-            ListNode l1 = partion(lists, s, q);
-            ListNode l2 = partion(lists, q + 1, e);
+            ListNode l1 = partition(lists, s, q);
+            ListNode l2 = partition(lists, q + 1, e);
             return merge(l1, l2);
         } else
             return null;
