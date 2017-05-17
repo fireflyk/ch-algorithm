@@ -3,6 +3,8 @@ package com.codinghero.algorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.codinghero.algorithm.CycleDetectionInDirectedGraph;
+
 public class CycleDetectionInDirectedGraphTest {
 
     private CycleDetectionInDirectedGraph instance = new CycleDetectionInDirectedGraph();
@@ -23,6 +25,12 @@ public class CycleDetectionInDirectedGraphTest {
     public void test3() {
         int[][] edges = { { 0, 1 }, { 0, 2 }, { 1, 3 }, { 3, 2 } };
         Assert.assertFalse(instance.isCycleExisted(edges, 4));
+    }
+
+    @Test
+    public void test5() {
+        int[][] edges = { { 0, 2 }, { 2, 1 }, { 1, 3 }, { 3, 2 } };
+        Assert.assertTrue(instance.isCycleExisted(edges, 4));
     }
 
     @Test

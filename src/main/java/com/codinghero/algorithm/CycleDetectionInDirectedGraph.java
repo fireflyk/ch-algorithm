@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * AIZU OJ, GRL_4_A
+ *
+ */
 public class CycleDetectionInDirectedGraph {
 
     public static void main(String[] args) {
@@ -51,11 +55,6 @@ public class CycleDetectionInDirectedGraph {
         return false;
     }
 
-    /**
-     * 
-     * @param edges
-     * @param vertexNum
-     */
     private ArrayList<LinkedList<Integer>> getGraph(int[][] edges, int vertexNum) {
         // initialize graph & set to be not null
         ArrayList<LinkedList<Integer>> graph = new ArrayList<LinkedList<Integer>>(vertexNum);
