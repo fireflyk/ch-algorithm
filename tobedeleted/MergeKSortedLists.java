@@ -1,4 +1,4 @@
-package com.codinghero.acm.leetcode;
+package com.codinghero.oj.leetcode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

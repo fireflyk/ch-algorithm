@@ -1,4 +1,4 @@
-package com.codinghero.acm.leetcode;
+package com.codinghero.oj.leetcode;
 
 public class MedianOfTwoSortedArrays {
 	public double findMedianSortedArrays(int a[], int b[]) {

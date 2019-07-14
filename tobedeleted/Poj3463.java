@@ -1,4 +1,4 @@
-package com.codinghero.acm.poj;
+package com.codinghero.oj.poj;
 
 import java.io.BufferedReader;
 import java.io.IOException;

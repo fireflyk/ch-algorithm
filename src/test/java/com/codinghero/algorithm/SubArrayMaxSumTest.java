@@ -4,10 +4,10 @@ import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.codinghero.acm.etc.SubArrayMaxSum;
-import com.codinghero.acm.etc.SubArrayMaxSumAns1;
-import com.codinghero.acm.etc.SubArrayMaxSumAns2;
-import com.codinghero.acm.etc.SubArrayMaxSumAns3;
+import com.codinghero.oj.etc.SubArrayMaxSum;
+import com.codinghero.oj.etc.SubArrayMaxSumAns1;
+import com.codinghero.oj.etc.SubArrayMaxSumAns2;
+import com.codinghero.oj.etc.SubArrayMaxSumAns3;
 
 public class SubArrayMaxSumTest {
 	

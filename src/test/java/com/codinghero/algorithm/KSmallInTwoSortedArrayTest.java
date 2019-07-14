@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.codinghero.acm.leetcode.KSmallInTwoSortedArray;
+import com.codinghero.oj.leetcode.KSmallInTwoSortedArray;
 
 public class KSmallInTwoSortedArrayTest {
 
