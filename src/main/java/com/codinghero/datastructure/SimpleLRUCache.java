@@ -4,13 +4,13 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-public class LRUCache<K, V> {
+public class SimpleLRUCache<K, V> {
 
 	private LinkedHashMap<K, V> datas;
 
 	private int capacity;
 
-	public LRUCache(int capacity) {
+	public SimpleLRUCache(int capacity) {
 		datas = new LinkedHashMap<K, V>();
 		this.capacity = capacity;
 	}
