@@ -3,20 +3,13 @@ package com.codinghero.interview.coupang;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class ShortestBridge {
+public class ShortestBridge3 {
 
     public int shortestBridge(int[][] grid) {
-        /**
-         * -1 unvisited
-         * 0 unvisited
-         * 1 first island
-         * 2 first step of traveling from first island
-         * ...
-         */
         int[][] travel = new int[grid.length][grid.length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid.length; j++) {
-                travel[i][j] = -1;
+                travel[i][j] = 0;
             }
         }
         final Position firstPiece = findFirstPiece(grid, travel);
@@ -32,7 +25,7 @@ public class ShortestBridge {
                 if (grid[i][j] == 1) {
                     return new Position(i, j);
                 } else {
-                    travel[i][j] = 0;
+                    travel[i][j] = -1;
                 }
             }
         }
@@ -44,7 +37,7 @@ public class ShortestBridge {
         // System.out.printf("Might visit (%d,%d)%n", row, col);
         if (row < 0 || row >= grid.length
             || col < 0 || col >= grid.length
-            || travel[row][col] >= 0) {
+            || travel[row][col] == -1) {
             // already visited
             // System.out.println("Ignore");
             return;
@@ -62,7 +55,7 @@ public class ShortestBridge {
                 // up
                 travelFirstIsland(grid, travel, row - 1, col, positions);
             } else {
-                travel[row][col] = 0;
+                travel[row][col] = -1;
             }
         }
     }
